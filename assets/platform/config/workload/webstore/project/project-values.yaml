@@ -1,0 +1,69 @@
+# using upstream argo chart https://github.com/argoproj/argo-helm/tree/main/charts/argocd-apps
+projects:
+- name: webstore
+  sourceRepos:
+  - 'ApplicationSet will replace this with the workload url'
+  namespace: argocd
+  additionalLabels: {}
+  additionalAnnotations: {}
+  description: Team Project
+  destinations:
+  - namespace: carts
+    name: spoke-staging
+  - namespace: catalog
+    name: spoke-staging
+  - namespace: checkout
+    name: spoke-staging
+  - namespace: orders
+    name: spoke-staging
+  - namespace: rabbitmq
+    name: spoke-staging
+  - namespace: ui
+    name: spoke-staging
+  - namespace: assets
+    name: spoke-staging    
+  #enablespokeprod - namespace: carts
+  #enablespokeprod   name: spoke-prod
+  #enablespokeprod - namespace: catalog
+  #enablespokeprod   name: spoke-prod
+  #enablespokeprod - namespace: checkout
+  #enablespokeprod   name: spoke-prod
+  #enablespokeprod - namespace: orders
+  #enablespokeprod   name: spoke-prod
+  #enablespokeprod - namespace: rabbitmq
+  #enablespokeprod   name: spoke-prod
+    
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+  # Deny all namespaced-scoped resources from being created, except for these
+  namespaceResourceWhitelist:
+  - group: ''
+    kind: Pod
+  - group: 'apps'
+    kind: Deployment
+  - group: 'apps'
+    kind: StatefulSet
+  - group: 'apps'
+    kind: ReplicaSet
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: ServiceAccount
+  - group: ''
+    kind: ConfigMap
+  - group: ''
+    kind: Secret
+  - group: 'rbac.authorization.k8s.io'
+    kind: RoleBinding
+  - group: 'rbac.authorization.k8s.io'
+    kind: Role
+  - group: 'dynamodb.services.k8s.aws'
+    kind: Table
+  - group: 'autoscaling'
+    kind: HorizontalPodAutoscaler      
