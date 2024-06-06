@@ -31,7 +31,7 @@ spec:
         component: '{{path.basename}}'
         workloads: 'true'
     spec:
-      project: default
+      project: webstore
       source:
         repoURL: '{{metadata.annotations.workload_repo_url}}'
         path: '{{path}}/{{metadata.labels.environment}}'
