@@ -6,5 +6,5 @@ resources:
 #- table-ack.yaml
 - configmap-crossplane.yaml
 - table-crossplane.yaml
-patches:
- - path: deployment.yaml
+#patches:
+# - path: deployment.yaml
