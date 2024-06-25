@@ -7,4 +7,4 @@ resources:
 - configmap-crossplane.yaml
 - table-crossplane.yaml
 patches:
- - path: deployment-crossplane.yaml
+ - path: deployment.yaml
