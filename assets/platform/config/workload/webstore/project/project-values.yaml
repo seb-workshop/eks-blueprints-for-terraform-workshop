@@ -66,4 +66,6 @@ projects:
   - group: 'dynamodb.services.k8s.aws'
     kind: Table
   - group: 'autoscaling'
-    kind: HorizontalPodAutoscaler      
+    kind: HorizontalPodAutoscaler
+  - group: 'dynamodb.aws.upbound.io'
+    kind: Table
