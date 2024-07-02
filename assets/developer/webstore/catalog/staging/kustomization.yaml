@@ -3,9 +3,10 @@ kind: Kustomization
 resources:
 - ../base
 - statefulset-mysql.yaml
+- deployment.yaml
 #- try-namespace.yaml # namespaces are not allowed to be created by apps team in project workloads
 patches:
-  - path: deployment.yaml
+  - path: deployment-patch.yaml
     target:
       group: apps
       version: v1
