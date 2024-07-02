@@ -4,3 +4,11 @@ resources:
 - ../base
 - statefulset-mysql.yaml
 #- try-namespace.yaml # namespaces are not allowed to be created by apps team in project workloads
+patches:
+  - path: deployment-patch.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: catalog
+      namespace: catalog
