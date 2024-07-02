@@ -4,6 +4,7 @@ resources:
 - ../base
 - statefulset-mysql.yaml
 - deployment.yaml
+- service-ebs.yaml
 #- try-namespace.yaml # namespaces are not allowed to be created by apps team in project workloads
 patches:
   - path: deployment-patch.yaml
