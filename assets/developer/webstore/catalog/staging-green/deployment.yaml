@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/type: app
+  name: catalog-ebs
+  namespace: catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: catalog
+      app.kubernetes.io/name: catalog
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/component: service
+        app.kubernetes.io/created-by: eks-workshop
+        app.kubernetes.io/instance: catalog
+        app.kubernetes.io/name: catalog
+    spec:
+      containers:
+        - env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: catalog-db
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: catalog-db
+            - name: DB_ENDPOINT
+              value: catalog-mysql-ebs:3306
+          envFrom:
+            - configMapRef:
+                name: catalog
+          image: public.ecr.aws/aws-containers/retail-store-sample-catalog:0.4.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          name: catalog
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            periodSeconds: 5
+            successThreshold: 3
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: catalog
+      volumes:
+        - emptyDir:
+            medium: Memory
+          name: tmp-volume

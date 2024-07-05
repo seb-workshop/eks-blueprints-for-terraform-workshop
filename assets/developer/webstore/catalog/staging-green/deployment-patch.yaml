@@ -1,0 +1,10 @@
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: DB_ENDPOINT_SEB
+    value: catalog-mysql-ebs:3306
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: SEB
+    value: PROUTE
