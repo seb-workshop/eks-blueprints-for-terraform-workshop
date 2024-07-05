@@ -32,6 +32,20 @@ projects:
   #enablespokeprod   name: spoke-prod
   #enablespokeprod - namespace: rabbitmq
   #enablespokeprod   name: spoke-prod
+  - namespace: carts
+    name: spoke-staging-green
+  - namespace: catalog
+    name: spoke-staging-green
+  - namespace: checkout
+    name: spoke-staging-green
+  - namespace: orders
+    name: spoke-staging-green
+  - namespace: rabbitmq
+    name: spoke-staging-green
+  - namespace: ui
+    name: spoke-staging-green
+  - namespace: assets
+    name: spoke-staging-green
     
   # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
   namespaceResourceBlacklist:
